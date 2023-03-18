@@ -1,0 +1,17 @@
+import React from 'react';
+import './index.css';
+import App from './App';
+import {library} from '@fortawesome/fontawesome-svg-core'
+import { faShoppingCart, faLeftLong} from '@fortawesome/free-solid-svg-icons';
+import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import ReactDOM from "react-dom";
+
+library.add(faShoppingCart, faFacebookF, faTwitter, faInstagram, faLeftLong)
+
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root")
+);
