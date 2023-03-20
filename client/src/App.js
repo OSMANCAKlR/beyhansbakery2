@@ -55,7 +55,7 @@ function App() {
       <Route path="/menu" element={<Menu foods={foods} cart={cart} addToCart={addToCart} />} />
       <Route path='/:id' element={<FoodInfo foods={foods} addToCart={addToCart} cart={cart} />} />
       <Route path="/cart" element={<Cart foods={foods} cart={cart} changeQuantity={changeQuantity} removeItem={removeItem}/>} />
-      <Route path="/payment" element={<Payment/>}/>
+      <Route path="/payment" element={<Payment cart={cart}/>}/>
       <Route path="/completion" element={<Completion/>}/>
 
       </Routes>

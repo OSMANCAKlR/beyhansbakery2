@@ -9,6 +9,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 });
 
 app.use(express.static(process.env.STATIC_DIR));
+app.use(express.json()); // Add this middleware to parse the request body as JSON
+
 
 app.get("/", (req, res) => {
   const path = resolve(process.env.STATIC_DIR + "/index.html");
@@ -23,9 +25,10 @@ app.get("/config", (req, res) => {
 
 app.post("/create-payment-intent", async (req, res) => {
   try {
+    const { amount } = req.body; // Get the amount value from the request body
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "AUD",
-      amount: 1999,
+      amount,
       automatic_payment_methods: { enabled: true },
     });
 
