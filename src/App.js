@@ -10,6 +10,7 @@ import Payment from "./Payment"
 import Completion from "./Completion"
 import Delivery from "./pages/Delivery";
 import Products from "./pages/Products";
+import "@stripe/stripe-js"
 
 function App() {
 
