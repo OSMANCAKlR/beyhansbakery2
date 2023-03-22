@@ -5,16 +5,6 @@ import { categories } from "../data";
 import Food from "./ui/Food";
 
 export default function Featured({ type }) {
-  const [selectedFood, setSelectedFood] = useState(null);
-
-  const handleFoodButtonClick = (foods) => {
-    if (selectedFood === foods) {
-      setSelectedFood(null);
-    } else {
-      setSelectedFood(foods);
-    }
-
-  };
 
 
   return (
@@ -35,7 +25,7 @@ export default function Featured({ type }) {
                     key={food.id}
                   />
                   <Link key={food.category} to={`/${food.category}`}>
-                  <button className="food__button" onClick={() => handleFoodButtonClick(food)}>See more</button>
+                  <button className="food__button" >See more</button>
                   </Link>
                 </div>
                 

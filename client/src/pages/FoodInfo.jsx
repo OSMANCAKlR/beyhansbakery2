@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Food from "../components/ui/Food";
 
-export default function FoodInfo({ addToCart, cart, foods }) {
-  const location = useLocation().pathname.slice(1);
+function FoodInfo({ addToCart, cart, foods }) {
+  const { title } = useParams();
 
-  const { id } = useParams();
-  const food = foods.find((food) => +food.id === +id);
+  const food = foods.find((item) => item.title === title);
+
+  const category = food.category;
 
   function addFoodToCart(food) {
     const foodExists = cart.find((item) => item.id === food.id);
@@ -16,43 +17,65 @@ export default function FoodInfo({ addToCart, cart, foods }) {
     addToCart(food);
   }
 
-  const foodInfo = foods.filter((food) => food.category === location)
-  console.log(foodInfo.length)
-
   return (
-    <section id="food__info">
+    <section id="product__info">
       <div className="container">
         <div className="row">
-          <div className="foods__wrapper">
-            {foods
-              .filter((food) => food.category === location)
-              .map((food) => (
-                <div className="food__container" key={food.id}>
-                  <Food food={food} key={food.id} />
-                  ${food.price.toFixed(2)}
+          {foods
+            .filter((food) => food.title === title)
+            .map((food) => (
+              <div className="food__container" key={food.id}>
+                <div className="foodinfo__img--container">
+                  <figure>
+                    <img className="foodinfo__img" src={food.image} alt="" />
+                  </figure>
+                </div>
+                <div className="foodinfo__description">
+                  <h2 className="food__title">{food.title}</h2>
+                  <span className="foodinfo__price">
+                    {" "}
+                    ${food.price.toFixed(2)} AUD
+                  </span>
                   {cart.find((item) => item.id === food.id) ? (
-                    <Link to={`/cart`} className="book__Link">
-                      <button className="food__button--checkout">Checkout</button>
+                    <Link key={food.id} to={`/cart`} className="book__Link">
+                      <button className="food__button--checkout">
+                        Checkout
+                      </button>
                     </Link>
                   ) : (
-                    <button className="food__button" onClick={() => addFoodToCart(food)}>
+                    <button
+                      className="food__button"
+                      onClick={() => addFoodToCart(food)}
+                    >
                       Add to cart
                     </button>
                   )}
                 </div>
+              </div>
+            ))}
+          <h2 className="otherproducts__title">You may also like</h2>
+          <div className="other__products">
+            {foods
+              .filter(
+                (food) => food.category === category && food.title !== title
+              )
+              .map((food) => (
+                <div className="otherproducts__container" key={food.id}>
+                  <Link to={`/product/${food.title}`}>
+                    <div className="otherproducts__wrapper">
+                      <figure>
+                        <img src={food.image} alt="" />
+                      </figure>
+                      <p>{food.title}</p>
+                    </div>
+                  </Link>
+                </div>
               ))}
-              {
-          foodInfo.length === 0 && 
-          <div className="cart__empty">
-            <h2 className="empty__cart">Sorry this item is not available yet. Please click the button to go back to homepage</h2>
-            <Link to="/">
-              <button className="food__button">Go Back</button>
-            </Link>
-          </div>
-        }
           </div>
         </div>
       </div>
     </section>
   );
 }
+
+export default FoodInfo;

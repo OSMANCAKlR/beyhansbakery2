@@ -8,6 +8,8 @@ import Menu from "./pages/Menu";
 import {foods} from "./data"
 import Payment from "./Payment"
 import Completion from "./Completion"
+import Delivery from "./pages/Delivery";
+import Products from "./pages/Products";
 
 function App() {
 
@@ -53,7 +55,9 @@ function App() {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/menu" element={<Menu foods={foods} cart={cart} addToCart={addToCart} />} />
-      <Route path='/:id' element={<FoodInfo foods={foods} addToCart={addToCart} cart={cart} />} />
+      <Route path='/:id' element={<Products foods={foods} addToCart={addToCart} cart={cart} />} />
+      <Route path="/product/:title" element={<FoodInfo foods={foods} addToCart={addToCart} cart={cart} />} />
+      <Route path="/delivery" element={<Delivery/>} />
       <Route path="/cart" element={<Cart foods={foods} cart={cart} changeQuantity={changeQuantity} removeItem={removeItem}/>} />
       <Route path="/payment" element={<Payment cart={cart}/>}/>
       <Route path="/completion" element={<Completion/>}/>

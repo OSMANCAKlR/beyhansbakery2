@@ -107,7 +107,7 @@ export const foods = [
         },
         {
             id: 12,
-            title: "Kiymali börek",
+            title: "Patetesli börek",
             image: patatesli_pogca,
             type:"savoury",
             price: 6,
@@ -115,7 +115,7 @@ export const foods = [
         },
         {
             id: 13,
-            title: "Patatesli Pogaca",
+            title: "Peynirli Pogaca",
             image: peynirli_pogca,
             type: "savoury",
             price: 5,

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Cart({ cart, changeQuantity, removeItem }) {
@@ -9,6 +9,25 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
       price += +food.price * food.quantity;
     });
     return price;
+  };
+
+
+  const [postcode, setPostcode] = useState();
+  const [isEligible, setIsEligible] = useState(null);
+
+  const handlePostcodeChange = (event) => {
+    setPostcode(event.target.value);
+  };
+
+  const handleCheckEligibility = () => {
+    // Replace this array with a list of valid postcodes for your delivery area
+    const validPostcodes = ["2018", "2020", "2040", "2003"];
+
+    if (validPostcodes.includes(postcode)) {
+      setIsEligible(true);
+    } else {
+      setIsEligible(false);
+    }
   };
 
   return (
@@ -26,10 +45,10 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
           <p className="cart__header--text">Quantity</p>
           <p className="cart__header--text">Price</p>
         </div>
-        <div className="cart__body">
+        <div className="cart__body" >
           {cart.map((food) => {
             return (
-              <div className="food__container">
+              <div className="food__container" key={food.id}>
                 <div className="food__wrapper--cart">
                   <img src={food.image} />
                   <div className="food__information">
@@ -78,6 +97,20 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
               <span>Total </span>
               <span>${total().toFixed(2)}</span>
             </div>
+            <p>
+            Please enter your postcode to check if you are eligible for
+            delivery:
+          </p>
+          <div className="inputButton">
+          <input  className="postcode__input" placeholder="Enter your post code..." value={postcode} onChange={handlePostcodeChange} />
+          <div className="search__button" onClick={handleCheckEligibility}>
+          <FontAwesomeIcon icon="fa-solid fa-magnifying-glass"  />
+          </div>
+          </div>
+          {postcode && isEligible === false ? (
+            <p>Sorry, we do not deliver to your area.</p>
+          ) : null}
+          {isEligible === true ? <p>You are eligible for delivery!</p> : null}
             <Link to="/payment">
               <button className="btn btn__checkout">Proceed to checkout</button>
             </Link>

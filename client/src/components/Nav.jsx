@@ -27,6 +27,11 @@ export default function Nav({ numberOfItems }) {
               Menu
             </Link>
           </li>
+          <li className="nav__list">
+            <Link to="/delivery" className="nav__link">
+              Delivery Zones
+            </Link>
+          </li>
           <li className="nav__icon">
             <Link to="/cart" className="nav__link">
               <FontAwesomeIcon icon="shopping-cart" />
