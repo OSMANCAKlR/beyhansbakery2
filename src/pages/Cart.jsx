@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
+import Stripe from 'stripe';
 
 export default function Cart({ cart, changeQuantity, removeItem }) {
   const [totalAmount, setTotalAmount] = useState(0);
@@ -15,16 +16,9 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
   }, [cart]);
 
   console.log(totalAmount);
-
-  let stripePromise;
-
-  const getStripe = () => {
-    if (!stripePromise) {
-      stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
-    }
-
-    return stripePromise;
-  };
+  console.log(cart)
+  
+  let stripePromis
 
   const total = () => {
     let price = 0;
@@ -52,24 +46,23 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
     }
   };
 
-  const Checkout = () => {
-    const item = {
-      price: "price_1MoMugCl3fwu9gFCfbulyau7",
-      quantity: 1
-    };
-    const checkoutOptions = {
-      lineItems: [item],
+
+  
+  const redirectToCheckout = async () => {
+    
+    const stripe = await loadStripe(process.env.REACT_APP_STRIPE_KEY);
+
+     stripe.redirectToCheckout({
+      lineItems: cart.map(item => ({
+          quantity: item.quantity,
+          price: item.price_api
+      })),
       mode: "payment",
-      successUrl: `${window.location.origin}/success`,
-      cancelUrl: `${window.location.origin}/cancel`,
-    };
-    const redirectToCheckout = async () => {
-      console.log("redirectCheckout");
-      const stripe = await getStripe();
-      const { error } = await stripe.redirectToCheckout(checkoutOptions);
-      console.log("stripe checkout error", error);
-    };
-    redirectToCheckout();
+      successUrl: "https://www.website.com/success",
+      cancelUrl: "https://www.website.com/canceled",
+  })
+
+
   };
 
   return (
@@ -153,7 +146,7 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
             <p>Sorry, we do not deliver to your area.</p>
           ) : null}
           {isEligible === true ? <p>You are eligible for delivery!</p> : null}
-              <button onClick={Checkout} className="btn btn__checkout">Proceed to checkout</button>
+              <button onClick={redirectToCheckout} className="btn btn__checkout">Proceed to checkout</button>
           </div>
         </div>
       </div>

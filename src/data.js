@@ -88,6 +88,7 @@ export const foods = [
             type:"savoury",
             price: 6,
             category: "borek",
+            price_api: "price_1MoN9MCl3fwu9gFCsiFHeYqm"
         },
         {
             id: 10,
@@ -96,6 +97,8 @@ export const foods = [
             type: "savoury",
             price: 5,
             category: "borek",
+            price_api: "price_1MoNB6Cl3fwu9gFCq7fxE4Rj"
+
         },
         {
             id: 11,
@@ -104,6 +107,8 @@ export const foods = [
             type: "savoury",
             price: 5,
             category: "borek",
+            price_api: "price_1MoNCKCl3fwu9gFCY9lNlWgE"
+
         },
         {
             id: 12,
