@@ -3,9 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import Stripe from 'stripe';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Cart({ cart, changeQuantity, removeItem }) {
   const [totalAmount, setTotalAmount] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isEligible, setIsEligible] = useState(null);
+  const [isDateSelected, setIsDateSelected] = useState(false);
 
   useEffect(() => {
     let amount = 0;
@@ -29,7 +34,7 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
   };
 
   const [postcode, setPostcode] = useState();
-  const [isEligible, setIsEligible] = useState(null);
+ 
 
   const handlePostcodeChange = (event) => {
     setPostcode(event.target.value);
@@ -37,7 +42,55 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
 
   const handleCheckEligibility = () => {
     // Replace this array with a list of valid postcodes for your delivery area
-    const validPostcodes = ["2018", "2020", "2040", "2003"];
+    const validPostcodes = [
+      "2015", // Alexandria
+      "2019", // Banksmeadow
+      "2015", // Beaconsfield
+      "2023", // Bellevue Hill
+      "2026", // Bondi
+      "2019", // Botany
+      "2024", // Bronte
+      "2021", // Centennial Park
+      "2036", // Chifley
+      "2031", // Clovelly
+      "2034", // Coogee
+      "2010", // Darlinghurst
+      "2028", // Double Bay
+      "2030", // Dover Heights
+      "2032", // Daceyville
+      "2027", // Edgecliff
+      "2011", // Elizabeth Bay
+      "2042", // Enmore
+      "2043", // Erskineville
+      "2036", // Hillsdale
+      "2033", // Kensington
+      "2032", // Kingsford
+      "2036", // La Perouse
+      "2036", // Little Bay
+      "2036", // Malabar
+      "2035", // Maroubra
+      "2020", // Mascot
+      "2036", // Matraville
+      "2021", // Paddington
+      "2035", // Pagewood
+      "2036", // Phillip Bay
+      "2027", // Point Piper
+      "2011", // Potts Point
+      "2022", // Queens Park
+      "2031", // Randwick
+      "2016", // Redfern
+      "2029", // Rose Bay
+      "2018", // Rosebery
+      "2021", // Rushcutters Bay
+      "2010", // Surry Hills
+      "2026", // Tamarama
+      "2030", // Vaucluse
+      "2017", // Waterloo
+      "2030", // Watsons Bay
+      "2024", // Waverley
+      "2017",  // Zetland
+      "2018" //Eastlakes
+    ];
 
     if (validPostcodes.includes(postcode)) {
       setIsEligible(true);
@@ -47,22 +100,21 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
   };
 
 
-  
   const redirectToCheckout = async () => {
-    
     const stripe = await loadStripe(process.env.REACT_APP_STRIPE_KEY);
-
-     stripe.redirectToCheckout({
+    stripe.redirectToCheckout({
       lineItems: cart.map(item => ({
           quantity: item.quantity,
           price: item.price_api
       })),
       mode: "payment",
-      successUrl: "https://www.website.com/success",
-      cancelUrl: "https://www.website.com/canceled",
-  })
-
-
+      successUrl: `${window.location.origin}/success`,
+      cancelUrl: `${window.location.origin}`,
+      shippingAddressCollection: {
+        allowedCountries: ['AU'],
+      },
+      billingAddressCollection: "auto",
+    });
   };
 
   return (
@@ -146,7 +198,19 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
             <p>Sorry, we do not deliver to your area.</p>
           ) : null}
           {isEligible === true ? <p>You are eligible for delivery!</p> : null}
-              <button onClick={redirectToCheckout} className="btn btn__checkout">Proceed to checkout</button>
+             
+              {isEligible && (
+        <div className="cart__delivery">
+          <p>Please select a delivery date:</p>
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            minDate={new Date()}
+            showDisabledMonthNavigation
+          />
+        </div>
+      )}
+       <button onClick={redirectToCheckout} className="btn btn__checkout">Proceed to checkout</button>
           </div>
         </div>
       </div>

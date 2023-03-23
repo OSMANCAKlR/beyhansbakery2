@@ -11,6 +11,11 @@ import Completion from "./Completion"
 import Delivery from "./pages/Delivery";
 import Products from "./pages/Products";
 import "@stripe/stripe-js"
+import Footer from "./components/Footer";
+import Contact from "./components/Contact";
+import AboutUs from "./pages/AboutUs";
+import RefundPolicy from "./pages/RefundPolicy";
+import Success from "./pages/Success";
 
 function App() {
 
@@ -55,15 +60,19 @@ function App() {
       <Nav numberOfItems={numberOfItems()}/>
       <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/menu" element={<Menu foods={foods} cart={cart} addToCart={addToCart} />} />
+      <Route path="/menu" element={<Menu food={foods} cart={cart} addToCart={addToCart} />} />
       <Route path='/:id' element={<Products foods={foods} addToCart={addToCart} cart={cart} />} />
       <Route path="/product/:title" element={<FoodInfo foods={foods} addToCart={addToCart} cart={cart} />} />
       <Route path="/delivery" element={<Delivery/>} />
       <Route path="/cart" element={<Cart foods={foods} cart={cart} changeQuantity={changeQuantity} removeItem={removeItem}/>} />
       <Route path="/payment" element={<Payment cart={cart}/>}/>
       <Route path="/completion" element={<Completion/>}/>
-
+      <Route path="/contact" element={<Contact/>} />
+      <Route path="/aboutus" element={<AboutUs/>} />
+      <Route path="/refunds" element={<RefundPolicy/>} />
+      <Route path="/success" element={<Success/>} />
       </Routes>
+      <Footer />
     </div>
     </Router>
   );

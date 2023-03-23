@@ -11,8 +11,7 @@ export default function Contact() {
               <div className="form__title--wrapper">
                 <h1 className="form__title">Contact us</h1>
                 <p className="form__para">
-                  Complete this form to request more than 15 units going to a
-                  single destination.
+                Craving something unique? Our bakery is here to make your sweet dreams come true! Whether you need a custom cake, cupcakes, or any other baked goods, we'd love to hear about your vision. Fill out the form below to tell us about your special request, and we'll get in touch with you shortly to discuss the details.
                 </p>
               </div>
               <div className="form__wrapper">
@@ -23,16 +22,6 @@ export default function Contact() {
                     type="text"
                     placeholder="John Smith"
                     required
-                  />
-                </div>
-                <div className="input__box">
-                  <span className="input__title">
-                    What is your company name?
-                  </span>
-                  <input
-                    className="company__input"
-                    type="text"
-                    placeholder="Company"
                   />
                 </div>
                 <div className="input__box">
@@ -55,7 +44,7 @@ export default function Contact() {
                     placeholder="example@example.com"
                   />
                 </div>
-                <div className="input__box date__input__box">
+                <div className="input__box">
                   <span className="input__title">
                     When would you like your order?
                   </span>
@@ -64,11 +53,14 @@ export default function Contact() {
                     className="date__input"
                     placeholder="Select a date"
                   />
-                  <p className="order__text">
-                    We recommend confirming bulk orders a minimum of one week in
-                    advance, but we'll always try to accommodate a last-minute
-                    request if we can.{" "}
-                  </p>
+                </div>
+                <div className="text_input_box">
+                  <span className="customer__order--title">
+                  Please describe your custom order
+                  </span>
+                  <textarea
+                    className="order__input"
+                  />
                 </div>
               </div>
               <span className="line"></span>

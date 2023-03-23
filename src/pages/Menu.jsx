@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Food from "../components/ui/Food";
 import { foods } from "../data";
 
-export default function Menu({cart , addToCart}) {
+export default function Menu({cart , addToCart, food: initialFoods}) {
+  const [food, setFood] = useState(initialFoods);
+
 
   const { id } = useParams();
 
-  const food = foods.find((food) => +food.id === +id);
+  const findFood = foods.find((food) => +food.id === +id);
 
   function addFoodToCart(food) {
     const foodExists = cart.find((item) => item.id === food.id);
@@ -17,13 +19,23 @@ export default function Menu({cart , addToCart}) {
     addToCart(food);
   }
 
+  function filterFood(filter) {
+    console.log(filter)
+    if (filter === 'LOW_TO_HIGH') {
+        setFood(food.slice().sort((a,b) => a.price - b.price ))
+    }
+    if (filter === 'HIGH_TO_LOW') {
+        setFood(food.slice().sort((a,b) => b.price - a.price ))
+    }
+}
+
   return (
     <section id="menu">
       <div className="container">
         <div className="row">
           <div className="food__header">
             <h2 className="section__title foods__header--title">All Food</h2>
-            <select defaultValue="DEFAULT" id="filter">
+            <select defaultValue="DEFAULT" className="menu__select" onChange={(event) => filterFood(event.target.value)}>
               <option value="DEFAULT" disabled>
                 Sort
               </option>
@@ -32,7 +44,7 @@ export default function Menu({cart , addToCart}) {
             </select>
           </div>
             <div className="foods">
-            {foods
+            {food
               .map((food) => (
                 <div className="food__container" key={food.id}>
                   <Food food={food} key={food.id} />
