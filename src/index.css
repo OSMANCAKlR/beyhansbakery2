@@ -7,6 +7,10 @@
   font-family: "Newsreader", serif;
 }
 
+button {
+  color: black;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -802,7 +806,7 @@ form .landing__button {
 
 a {
   font-weight: 600;
-  color: #5f564f;
+  color: black;
 }
 
 
