@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
-import Stripe from 'stripe';
+import Stripe from "stripe";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,6 +11,8 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isEligible, setIsEligible] = useState(null);
   const [isDateSelected, setIsDateSelected] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [postcode, setPostcode] = useState();
 
   useEffect(() => {
     let amount = 0;
@@ -20,11 +22,6 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
     setTotalAmount(amount * 100);
   }, [cart]);
 
-  console.log(totalAmount);
-  console.log(cart)
-  
-  let stripePromis
-
   const total = () => {
     let price = 0;
     cart.forEach((food) => {
@@ -32,9 +29,6 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
     });
     return price;
   };
-
-  const [postcode, setPostcode] = useState();
- 
 
   const handlePostcodeChange = (event) => {
     setPostcode(event.target.value);
@@ -88,8 +82,8 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
       "2017", // Waterloo
       "2030", // Watsons Bay
       "2024", // Waverley
-      "2017",  // Zetland
-      "2018" //Eastlakes
+      "2017", // Zetland
+      "2018", //Eastlakes
     ];
 
     if (validPostcodes.includes(postcode)) {
@@ -99,19 +93,26 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
     }
   };
 
+  const handleCheckout = () => {
+    if (!selectedDate || !isEligible) {
+      setShowErrorMessage(true);
+    } else {
+      redirectToCheckout();
+    }
+  };
 
   const redirectToCheckout = async () => {
     const stripe = await loadStripe(process.env.REACT_APP_STRIPE_KEY);
     stripe.redirectToCheckout({
-      lineItems: cart.map(item => ({
-          quantity: item.quantity,
-          price: item.price_api
+      lineItems: cart.map((item) => ({
+        quantity: item.quantity,
+        price: item.price_api,
       })),
       mode: "payment",
       successUrl: `${window.location.origin}/success`,
       cancelUrl: `${window.location.origin}`,
       shippingAddressCollection: {
-        allowedCountries: ['AU'],
+        allowedCountries: ["AU"],
       },
       billingAddressCollection: "auto",
     });
@@ -132,7 +133,7 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
           <p className="cart__header--text">Quantity</p>
           <p className="cart__header--text">Price</p>
         </div>
-        <div className="cart__body" >
+        <div className="cart__body">
           {cart.map((food) => {
             return (
               <div className="food__container" key={food.id}>
@@ -184,33 +185,44 @@ export default function Cart({ cart, changeQuantity, removeItem }) {
               <span>Total </span>
               <span>${total().toFixed(2)}</span>
             </div>
-            <p>
-            Please enter your postcode to check if you are eligible for
-            delivery:
-          </p>
-          <div className="inputButton">
-          <input  className="postcode__input" placeholder="Enter your post code..." value={postcode} onChange={handlePostcodeChange} />
-          <div className="search__button" onClick={handleCheckEligibility}>
-          <FontAwesomeIcon icon="fa-solid fa-magnifying-glass"  />
-          </div>
-          </div>
-          {postcode && isEligible === false ? (
-            <p>Sorry, we do not deliver to your area.</p>
-          ) : null}
-          {isEligible === true ? <p>You are eligible for delivery!</p> : null}
-             
-              {isEligible && (
-        <div className="cart__delivery">
-          <p>Please select a delivery date:</p>
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            minDate={new Date()}
-            showDisabledMonthNavigation
-          />
-        </div>
-      )}
-       <button onClick={redirectToCheckout} className="btn btn__checkout">Proceed to checkout</button>
+            <p className="eligible__text">
+              Please enter your postcode to check if you are eligible for
+              delivery:
+            </p>
+            <div className="inputButton">
+              <input
+                className="postcode__input"
+                placeholder="Enter your post code..."
+                value={postcode}
+                onChange={handlePostcodeChange}
+                onKeyPress={(event) => event.key === "Enter" && handleCheckEligibility()}
+              />
+              <div className="search__button" onClick={handleCheckEligibility}>
+                <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
+              </div>
+            </div>
+            {postcode && isEligible === false ? (
+              <p className="uneligible__delivery">Sorry, we do not deliver to your area.</p>
+            ) : null}
+            {isEligible === true && (
+              <div className="cart__delivery">
+                <p className="eligible__delivery"> <span className="green"> Great! </span>We deliver to your area</p>
+                <p className="date__title">Please select a delivery date:</p>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => {
+                    setSelectedDate(date);
+                    setIsDateSelected(true);
+                  }}
+                  minDate={new Date()}
+                  showDisabledMonthNavigation
+                />
+              </div>
+            )}
+
+            <button onClick={redirectToCheckout} className="btn btn__checkout" disabled={!isEligible || !isDateSelected}>
+              Proceed to checkout
+            </button>
           </div>
         </div>
       </div>
