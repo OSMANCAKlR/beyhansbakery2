@@ -6,8 +6,6 @@ import FoodInfo from "./pages/FoodInfo";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import {foods} from "./data"
-import Payment from "./Payment"
-import Completion from "./Completion"
 import Delivery from "./pages/Delivery";
 import Products from "./pages/Products";
 import "@stripe/stripe-js"
@@ -65,8 +63,6 @@ function App() {
       <Route path="/product/:title" element={<FoodInfo foods={foods} addToCart={addToCart} cart={cart} />} />
       <Route path="/delivery" element={<Delivery/>} />
       <Route path="/cart" element={<Cart foods={foods} cart={cart} changeQuantity={changeQuantity} removeItem={removeItem}/>} />
-      <Route path="/payment" element={<Payment cart={cart}/>}/>
-      <Route path="/completion" element={<Completion/>}/>
       <Route path="/contact" element={<Contact/>} />
       <Route path="/aboutus" element={<AboutUs/>} />
       <Route path="/refunds" element={<RefundPolicy/>} />

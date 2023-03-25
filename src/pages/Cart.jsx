@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
-import Stripe from "stripe";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 

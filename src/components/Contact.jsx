@@ -1,13 +1,29 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
+
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('service_wcleo09', 'template_2yqpv69', form.current, 'tkNlfjfT1j78Ostkc')
+      .then((result) => {
+          console.log(result.text);
+          form.current.reset();
+      }, (error) => {
+          console.log(error.text);
+      });
+  };
+
   return (
     <section id="contact__form">
       <div className="container">
         <div className="row">
           <div className="form">
-            <form action="">
+            <form ref={form} onSubmit={sendEmail}>
               <div className="form__title--wrapper">
                 <h1 className="form__title">Contact us</h1>
                 <p className="form__para">
@@ -22,6 +38,7 @@ export default function Contact() {
                     type="text"
                     placeholder="John Smith"
                     required
+                    name="user_name"
                   />
                 </div>
                 <div className="input__box">
@@ -32,6 +49,7 @@ export default function Contact() {
                     className="number__input"
                     type="number"
                     placeholder="xxx xxx xxx"
+                    name="user_phone"
                   />
                 </div>
                 <div className="input__box">
@@ -42,6 +60,7 @@ export default function Contact() {
                     type="email"
                     className="email__input"
                     placeholder="example@example.com"
+                    name="user_email"
                   />
                 </div>
                 <div className="input__box">
@@ -52,6 +71,7 @@ export default function Contact() {
                     type="date"
                     className="date__input"
                     placeholder="Select a date"
+                    name="user_date"
                   />
                 </div>
                 <div className="text_input_box">
@@ -60,12 +80,13 @@ export default function Contact() {
                   </span>
                   <textarea
                     className="order__input"
+                    name="message"
                   />
                 </div>
               </div>
               <span className="line"></span>
               <div className="form__bottom">
-                <button className="landing__button">Send</button>
+                <button type="submit" value="Send" className="landing__button">Send</button>
                 <div className="social__links">
                   <div className="social__link">
                     <a href="">

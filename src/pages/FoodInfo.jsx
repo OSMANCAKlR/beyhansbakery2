@@ -1,6 +1,5 @@
 import React from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
-import Food from "../components/ui/Food";
+import { Link, useParams } from "react-router-dom";
 
 function FoodInfo({ addToCart, cart, foods }) {
   const { title } = useParams();
@@ -16,6 +15,8 @@ function FoodInfo({ addToCart, cart, foods }) {
     }
     addToCart(food);
   }
+
+  console.log(food)
 
   return (
     <section id="product__info">
@@ -36,6 +37,9 @@ function FoodInfo({ addToCart, cart, foods }) {
                     {" "}
                     ${food.price.toFixed(2)} AUD
                   </span>
+                  <p className="food__description">
+                    {food.description}
+                    </p>
                   {cart.find((item) => item.id === food.id) ? (
                     <Link key={food.id} to={`/cart`} className="book__Link">
                       <button className="food__button--checkout">

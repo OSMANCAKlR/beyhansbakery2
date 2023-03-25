@@ -9,7 +9,6 @@ export default function Menu({cart , addToCart, food: initialFoods}) {
 
   const { id } = useParams();
 
-  const findFood = foods.find((food) => +food.id === +id);
 
   function addFoodToCart(food) {
     const foodExists = cart.find((item) => item.id === food.id);

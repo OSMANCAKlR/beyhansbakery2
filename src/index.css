@@ -15,6 +15,72 @@ html {
   scroll-behavior: smooth;
 }
 
+.menu__select {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+
+
+.btn__menu {
+  background-color: transparent;
+  font-size: 32px;
+  border: none;
+  color: #7342d6;
+  display: none;
+}
+
+.menu__backdrop {
+  position: absolute;
+  background-color: #242424;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  transition: all 300ms ease;
+  opacity: 0;
+  transform: translate(100%);
+}
+
+.menu--open {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.menu--open .menu__backdrop {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(0);
+}
+
+.menu__links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu__list {
+  padding: 32px 0;
+}
+
+.menu__link {
+  color: white;
+  font-size: 40px;
+}
+
+.btn__menu--close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  padding: 8px;
+  color: white;
+}
 .row {
   width: 100%;
   max-width: 1390px;
@@ -35,6 +101,10 @@ nav {
   display: flex;
   align-items: center;
   padding: 24px;
+}
+
+.btn__menu {
+  display: none;
 }
 
 nav .row {
@@ -319,7 +389,7 @@ main {
 .menu__select {
   width: 184px;
   padding: 14px;
-  height: 54px;
+  height: 42px;
 }
 #menu .foods {
   justify-content: center;
@@ -777,6 +847,19 @@ form .landing__button {
   width: 50%;
 }
 
+#food__info {
+  height: 100vh;
+}
+
+.food__description {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+#product__info {
+  height: 100vh;
+}
+
 .foodinfo__price {
   margin-top: 24px;
   font-weight: 500;
@@ -850,16 +933,36 @@ a {
 /* MOBILE */
 
 @media (max-width: 480px) {
+
   nav {
     padding: 0px;
   }
 
-  .nav__links {
+  .nav__list {
     display: none;
   }
 
+  .nav__links {
+    margin-right: 24px;
+    font-size: 24px;
+  }
+
+  .fa-cart-shopping{
+    font-size: 22px;
+  }
+  .btn__menu {
+    display: block;
+    color: #5f564f;
+    background: none;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  }
+
   .logo__container {
-    margin-left: 114px;
+    margin-left: 42px;
   }
 
   .landing__title {
@@ -929,6 +1032,24 @@ a {
     margin-bottom: 14px;
   }
 
+  #food__info .foods__wrapper {
+    margin-top: 0px;
+  }
+
+  #menu .food__container {
+    margin: 0px;
+    margin-bottom: 24px;
+  }
+
+  #menu img {
+    width: 131px;
+    height: 93px;
+  }
+
+  #menu .foods {
+    margin-top: 0px;
+  }
+
   #featured img {
     width: 124px;
     height: 93px;
@@ -936,6 +1057,7 @@ a {
 
   .food__wrapper {
     flex-wrap: wrap;
+    margin-bottom: 0px;
   }
 
   .food__title {
@@ -945,6 +1067,10 @@ a {
   .food__button {
     height: 34px;
     width: 89px;
+  }
+
+  .food__container {
+    margin-bottom: 24px;
   }
 
   form {
@@ -1015,5 +1141,20 @@ a {
     margin-left: 8px;
   }
 
+
+    .footer__link {
+      font-size: 14px;
+    }
+
+    html, body {
+      overflow-x: hidden;
+    }
+    body {
+      position: relative
+    }
+
+      .eligible__text {
+        max-width: 244px;
+      }
 
 }

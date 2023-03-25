@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { foods } from "../data";
 import { categories } from "../data";
 import Food from "./ui/Food";
 

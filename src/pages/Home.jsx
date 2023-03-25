@@ -5,7 +5,6 @@ import Landing from "../components/Landing";
 
 export default function Home() {
   const [showFoodTypes, setShowFoodTypes] = useState(false);
-  const [foodType, setFoodType] = useState("");
 
   return (
     <div>
