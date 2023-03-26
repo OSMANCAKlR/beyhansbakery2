@@ -46,7 +46,9 @@ export default function Menu({cart , addToCart, food: initialFoods}) {
             {food
               .map((food) => (
                 <div className="food__container" key={food.id}>
+                  <Link to={`/product/${food.title}`}>
                   <Food food={food} key={food.id} />
+                  </Link>
                   ${food.price.toFixed(2)}
                   {cart.find((item) => item.id === food.id) ? (
                     <Link to={`/cart`} className="book__Link">

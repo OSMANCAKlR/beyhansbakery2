@@ -241,6 +241,72 @@ img {
   margin-left: 14px;
 }
 
+/* About Us */
+
+.aboutus__title {
+  font-size: 44px;
+  text-align: center;
+}
+
+.aboutus__para {
+  font-size: 20px;
+  margin-top: 24px;
+}
+
+
+/* REFUND */
+
+#refund {
+  height: 100vh;
+}
+
+.refund__title {
+  font-size: 44px;
+  text-align: center;
+}
+
+.refund__para {
+  font-size: 20px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+
+.postcode__wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* Delivery */
+
+.delivery__title {
+  font-size: 44px;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.delivery__para {
+  font-size: 20px;
+  margin-top: 24px;
+}
+
+
+#delivery .postcode__input{
+  display: flex;
+  width: 354px;
+}
+
+#delivery .postcode__input {
+  margin-bottom: 14px;
+}
+
+#delivery .food__button {
+  margin-bottom: 24px;
+}
+
 /* #MENU */
 
 main {
@@ -248,8 +314,7 @@ main {
   overflow-x: hidden;
 }
 
-#menu {
-}
+
 
 .menu__wrapper-title {
   display: flex;
@@ -857,6 +922,11 @@ form .landing__button {
 }
 
 #product__info {
+  height: 100vh;
+}
+
+
+#aboutus {
   height: 100vh;
 }
 
